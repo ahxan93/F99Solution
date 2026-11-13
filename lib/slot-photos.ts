@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { imageCredits } from "@/data/image-credits";
 import { imageBlurs } from "@/data/image-blurs";
 import { imageSlots } from "@/data/image-slots";
 import type { SlotPhoto } from "@/components/ui/slot-frame";
@@ -18,8 +19,11 @@ const BLUR =
 export function getSlotPhoto(slot: string): SlotPhoto | null {
   const s = imageSlots[slot];
   if (!s) return null;
-  if (!fs.existsSync(path.join(process.cwd(), "public", "images", s.file))) return null;
-  return { src: `/images/${s.file}`, alt: s.alt, blurDataURL: imageBlurs[slot] ?? BLUR };
+  const file = path.join(process.cwd(), "public", "images", s.file);
+  if (!fs.existsSync(file)) return null;
+  // ?v=<mtime>: the image optimizer caches by URL, so a replaced file must change its URL to show.
+  const v = Math.floor(fs.statSync(file).mtimeMs);
+  return { src: `/images/${s.file}?v=${v}`, alt: imageCredits[slot]?.alt ?? s.alt, blurDataURL: imageBlurs[slot] ?? BLUR };
 }
 
 /** Blog post slug -> image slot key. */

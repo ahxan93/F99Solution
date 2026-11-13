@@ -72,7 +72,7 @@ const services: ServiceDef[] = [
     icons:
       "a magnifying glass, a rising bar chart, a ranking podium with a star, a location pin, an upward arrow",
     topic: "search and ranking",
-    queries: ["laptop seo analytics", "search engine ranking screen", "keyword research notebook desk"],
+    queries: ["seo analytics laptop screen close up", "marketing team office laptops", "business report charts paper desk"],
   },
   {
     slug: "meta-ads",
@@ -81,7 +81,7 @@ const services: ServiceDef[] = [
     action: "holding it and scrolling a social feed",
     icons: "hearts, thumbs-up, chat bubbles, share arrows, a notification bell, a target",
     topic: "likes and ad targeting",
-    queries: ["smartphone social media", "social media advertising phone", "scrolling social feed phone"],
+    queries: ["woman using smartphone social media", "creative team laptops office desk", "flat lay smartphone social media"],
   },
   {
     slug: "google-ads",
@@ -90,7 +90,7 @@ const services: ServiceDef[] = [
     action: "typing a search",
     icons: "a magnifying glass, a cursor click, a target, a coin, a rising line chart",
     topic: "search ads and clicks",
-    queries: ["online advertising laptop", "search results screen", "pay per click dashboard"],
+    queries: ["over the shoulder laptop search", "marketing team discussing laptop meeting", "keyboard coffee desk top view"],
   },
   {
     slug: "landing-pages-funnels",
@@ -99,7 +99,7 @@ const services: ServiceDef[] = [
     action: "sketching a page wireframe with a finger",
     icons: "a funnel, a browser window, a cursor click, a checkmark, a button shape",
     topic: "funnel and conversion",
-    queries: ["website wireframe sketch", "ux design wireframe paper", "conversion funnel whiteboard"],
+    queries: ["ux wireframe sketch paper", "ux designers whiteboard", "design sketch notebook tablet"],
   },
   {
     slug: "analytics-tracking",
@@ -108,7 +108,7 @@ const services: ServiceDef[] = [
     action: "pointing at the screen",
     icons: "a pie chart, a line graph, bar charts, a gauge, dashboard tiles",
     topic: "data charts",
-    queries: ["analytics dashboard laptop", "data charts screen", "business graphs tablet"],
+    queries: ["analytics dashboard business team", "data analyst monitors charts office", "charts graphs desk top view"],
   },
   {
     slug: "ecommerce-marketing",
@@ -117,7 +117,7 @@ const services: ServiceDef[] = [
     action: "holding it with a small parcel box on the desk",
     icons: "a shopping cart, a parcel box, a credit card, a price tag, a five-star rating",
     topic: "shopping and sales",
-    queries: ["online shopping smartphone", "ecommerce parcel packing", "small online store"],
+    queries: ["small business owner packing orders", "online store warehouse packages", "shopping bags laptop desk top view"],
   },
   {
     slug: "social-media-management",
@@ -126,7 +126,7 @@ const services: ServiceDef[] = [
     action: "holding it to film a flat-lay of products on a desk",
     icons: "hearts, a play button, chat bubbles, a hashtag symbol, a calendar",
     topic: "posts and engagement",
-    queries: ["social media content planning", "flat lay products phone", "content calendar desk"],
+    queries: ["content creator smartphone filming", "content creators studio", "camera phone props flat lay"],
   },
   {
     slug: "content-marketing",
@@ -135,7 +135,7 @@ const services: ServiceDef[] = [
     action: "writing with a notebook and pen beside it",
     icons: "document pages, a pen, a lightbulb, speech bubbles, a bookmark",
     topic: "articles and ideas",
-    queries: ["writing laptop notebook", "content writer desk", "blogging coffee laptop"],
+    queries: ["writer typing laptop notebook", "writers coffee shop laptop", "notebook pen top view"],
   },
   {
     slug: "video-editing-design",
@@ -144,7 +144,7 @@ const services: ServiceDef[] = [
     action: "using a mouse on a video editing timeline",
     icons: "a play button, a film strip, scissors, a clock timeline, a colour wheel",
     topic: "video editing",
-    queries: ["video editing timeline", "video editor monitor", "filmmaker editing desk"],
+    queries: ["video editing monitor timeline", "video production studio", "video editor desk keyboard mouse"],
   },
   {
     slug: "email-marketing",
@@ -153,7 +153,7 @@ const services: ServiceDef[] = [
     action: "typing",
     icons: "envelopes, a paper plane, an inbox tray, a notification badge, a checkmark",
     topic: "email campaigns",
-    queries: ["email inbox laptop", "newsletter writing laptop", "typing email desk"],
+    queries: ["man typing email laptop", "man working laptop office window", "typing laptop keyboard hands top view"],
   },
   {
     slug: "whatsapp-marketing",
@@ -162,7 +162,7 @@ const services: ServiceDef[] = [
     action: "typing a message with both thumbs",
     icons: "chat bubbles, a paper plane, double checkmarks, a bell, a phone receiver",
     topic: "chat messaging",
-    queries: ["messaging app smartphone", "texting phone hands", "chat conversation phone"],
+    queries: ["chatting smartphone close up", "woman texting smartphone office", "man typing message phone"],
   },
   {
     slug: "website-design-development",
@@ -171,7 +171,7 @@ const services: ServiceDef[] = [
     action: "typing with a tablet showing a layout beside it",
     icons: "a browser window, code brackets, a layout grid, a cursor, a gear",
     topic: "web design and code",
-    queries: ["web design laptop tablet", "responsive website design", "designer working website"],
+    queries: ["web designer working computer", "web developers office", "web designer sketch layout desk"],
   },
   {
     slug: "full-stack-development",
@@ -180,7 +180,7 @@ const services: ServiceDef[] = [
     action: "typing code",
     icons: "code brackets, a database cylinder, a gear, a cloud, a terminal prompt symbol",
     topic: "code and databases",
-    queries: ["programmer coding laptop", "code on screen", "software developer desk"],
+    queries: ["programmer code monitor", "software developers team working", "laptop code programming desk night"],
   },
   {
     slug: "crm-automation",
@@ -189,7 +189,7 @@ const services: ServiceDef[] = [
     action: "tapping the screen",
     icons: "contact cards, a pipeline funnel, cycling automation arrows, a handshake, a bar chart",
     topic: "contacts and automation",
-    queries: ["tablet business app", "customer management tablet", "workflow planning sticky notes"],
+    queries: ["tablet business customer", "sales team meeting office laptops", "customer data tablet office desk"],
   },
   {
     slug: "branding-logo-design",
@@ -198,7 +198,7 @@ const services: ServiceDef[] = [
     action: "drawing a shape with the stylus",
     icons: "a pen tool, a colour palette, a circle square and triangle, colour swatches, a grid",
     topic: "design shapes and colours",
-    queries: ["graphic designer stylus tablet", "color palette design", "brand design sketch"],
+    queries: ["graphic designer stylus tablet", "creative designers working studio", "color palette swatches designer desk"],
   },
   {
     slug: "influencer-marketing",
@@ -207,7 +207,7 @@ const services: ServiceDef[] = [
     action: "holding the gimbal in front of a softly blurred ring light",
     icons: "a star, a heart, a play button, a follower icon, a camera",
     topic: "creator content",
-    queries: ["content creator ring light", "smartphone gimbal filming", "vlogger setup"],
+    queries: ["young woman recording video smartphone tripod", "photographer studio lighting", "camera tripod ring light desk"],
   },
   {
     slug: "online-reputation-management",
@@ -217,7 +217,7 @@ const services: ServiceDef[] = [
     icons:
       "a star rating, a thumbs-up, a shield with a checkmark, a chat bubble with a heart, a trophy",
     topic: "reviews and trust",
-    queries: ["five star review phone", "customer feedback rating", "customer satisfaction smartphone"],
+    queries: ["customer review five stars smartphone", "customer satisfaction survey smiling customers", "customer rating stars smartphone hand"],
   },
 ];
 
@@ -256,7 +256,7 @@ export const slotList: ImageSlot[] = [
   ]),
   {
     key: "home-why-us",
-    query: "team meeting tablet",
+    query: "diverse business team discussing office",
     file: "home-why-choose-us.webp",
     size: "wide",
     alt: "Illustration of a marketing strategy plan on a tablet with floating icons",
@@ -266,7 +266,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "home-process",
-    query: "planning workflow sticky notes",
+    query: "sticky notes planning wall",
     file: "home-process.webp",
     size: "wide",
     alt: "Illustration of a step-by-step digital marketing process on a tablet",
@@ -276,7 +276,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "home-cta",
-    query: "laptop night city lights",
+    query: "business owner laptop modern office window",
     file: "home-cta.webp",
     size: "wide",
     alt: "Illustration of a laptop with growth charts and floating icons on a dark blue background, representing growing a business online",
@@ -286,7 +286,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "about-story",
-    query: "colleagues laptops office",
+    query: "colleagues working together office",
     file: "about-team-at-work.webp",
     size: "card",
     alt: "Illustration of laptops with shared charts and floating icons, representing digital marketing teamwork",
@@ -296,7 +296,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "about-team",
-    query: "team planning meeting table",
+    query: "team brainstorming whiteboard",
     file: "about-team-planning.webp",
     size: "wide",
     alt: "Illustration of a marketing campaign plan with floating icons",
@@ -306,7 +306,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "contact-side",
-    query: "customer support headset",
+    query: "call center office agents working",
     file: "contact-customer-support.webp",
     size: "card",
     alt: "Illustration of a laptop and headset with chat icons, representing customer support",
@@ -316,7 +316,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "blog-meta-vs-google",
-    query: "comparing phone laptop screens",
+    query: "comparing smartphone laptop desk",
     file: "blog-meta-ads-vs-google-ads-india.webp",
     size: "card",
     alt: "Illustration of a laptop and a smartphone side by side with chart icons, comparing Meta Ads and Google Ads results",
@@ -326,7 +326,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "blog-local-seo",
-    query: "map pin smartphone city",
+    query: "small shop storefront local business",
     file: "blog-local-seo-mumbai-guide.webp",
     size: "card",
     alt: "Illustration of a smartphone with floating map pin icons, representing local SEO",
@@ -336,7 +336,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "blog-cost",
-    query: "budget calculator laptop",
+    query: "calculator budget desk",
     file: "blog-digital-marketing-cost-india.webp",
     size: "card",
     alt: "Illustration of a laptop and calculator with floating budget icons, representing digital marketing cost",
@@ -346,7 +346,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "case-d2c-fashion",
-    query: "fashion boutique clothing rack",
+    query: "fashion clothing store",
     file: "case-d2c-fashion-meta-ads.webp",
     size: "card",
     alt: "Illustration of a tablet with floating shopping and heart icons, representing a D2C fashion Meta Ads case study",
@@ -356,7 +356,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "case-clinic",
-    query: "clinic reception interior",
+    query: "doctor clinic reception",
     file: "case-clinic-local-seo.webp",
     size: "card",
     alt: "Illustration of a laptop with floating map pin and care icons, representing a clinic local SEO case study",
@@ -366,7 +366,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "case-b2b-saas",
-    query: "saas software dashboard",
+    query: "software dashboard laptop",
     file: "case-b2b-saas-crm.webp",
     size: "card",
     alt: "Illustration of a laptop with floating pipeline and contact icons, representing a B2B SaaS CRM case study",
@@ -376,7 +376,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "case-real-estate",
-    query: "modern apartment interior",
+    query: "apartment interior living room",
     file: "case-real-estate-google-ads.webp",
     size: "card",
     alt: "Illustration of a tablet with floating house and search icons, representing a real estate Google Ads case study",
@@ -386,7 +386,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "case-restaurant",
-    query: "cafe coffee table phone",
+    query: "cafe table smartphone coffee",
     file: "case-restaurant-social-media.webp",
     size: "card",
     alt: "Illustration of a smartphone with floating heart icons, representing a restaurant social media case study",
@@ -396,7 +396,7 @@ export const slotList: ImageSlot[] = [
   },
   {
     key: "case-coaching",
-    query: "coach laptop notebook",
+    query: "online class teacher video call",
     file: "case-coaching-website-funnel.webp",
     size: "card",
     alt: "Illustration of a laptop with floating funnel and calendar icons, representing a coaching website funnel case study",

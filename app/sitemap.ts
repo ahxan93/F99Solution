@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/careers", priority: 0.3 },
     { path: "/privacy-policy", priority: 0.2 },
     { path: "/terms", priority: 0.2 },
+    { path: "/image-credits", priority: 0.1 },
   ];
 
   const [caseStudies, posts] = [await getCaseStudies(), getAllPosts()];

@@ -10,6 +10,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    // Slot images carry a ?v=<file mtime> so replacing a file busts the image-optimizer cache.
+    localPatterns: [{ pathname: "/images/**" }, { pathname: "/**", search: "" }],
+  },
   // The three original sample posts were replaced by in-depth guides; keep the old URLs working.
   async redirects() {
     return [
