@@ -63,7 +63,6 @@ export function PortfolioGrid({
               <SlotFrame
                 asset={photos[c.slug]}
                 icon={Briefcase}
-                overlay="card"
                 sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw"
                 className="aspect-[3/2]"
               />

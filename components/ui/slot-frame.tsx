@@ -6,11 +6,9 @@ import { BrandIllustration } from "@/components/ui/brand-illustration";
 
 type Overlay =
   | "none"
-  /** Soft dark gradient at the bottom (cards, covers). */
-  | "card"
-  /** Page background: theme-aware, ~85% of the page colour so text on top stays readable (AA). */
+  /** Page background: theme-aware and light. The images are dark navy already, so dark mode needs little; light mode needs enough page colour for dark text (AA). */
   | "background"
-  /** Navy-blue overlay for the CTA band (white text on top, both themes). */
+  /** Light navy tint for the CTA band (white text on top, both themes). */
   | "navy";
 
 /** Lean photo data (no credits), safe to pass to client components. */
@@ -38,9 +36,9 @@ interface SlotFrameProps {
 }
 
 const overlays: Record<Exclude<Overlay, "none">, string> = {
-  card: "bg-gradient-to-t from-[#060a17]/75 via-[#060a17]/20 to-transparent",
-  background: "bg-gradient-to-b from-background/85 via-background/88 to-background",
-  navy: "bg-gradient-to-br from-[#0a2a8a]/90 via-[#0b1c5c]/88 to-[#060a17]/92",
+  background:
+    "bg-gradient-to-b from-background/80 via-background/75 to-background dark:from-background/70 dark:via-background/65 dark:to-background/90",
+  navy: "bg-gradient-to-br from-[#0a2a8a]/70 via-[#0b1c5c]/62 to-[#060a17]/75",
 };
 
 /**

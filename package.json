@@ -11,6 +11,9 @@
     "typecheck": "tsc --noEmit",
     "seed:admin": "node --env-file=.env.local scripts/seed-admin.mjs",
     "images:prompts": "node scripts/image-prompts.mjs",
+    "images:sync": "node scripts/images-sync.ts",
+    "prebuild": "npm run images:sync",
+    "images:fetch": "node --env-file-if-exists=.env.local scripts/fetch-images.ts",
     "seo:check": "node scripts/check-seo.mjs"
   },
   "dependencies": {

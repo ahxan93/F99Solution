@@ -164,7 +164,6 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
             <SlotImage
               slot={`${service.slug}-support`}
               icon={service.icon}
-              overlay="card"
               sizes="(min-width: 1024px) 380px, 100vw"
               className="border-border aspect-[3/2] rounded-3xl border"
             />

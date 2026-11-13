@@ -25,7 +25,6 @@ export function WhyUs() {
           <SlotImage
             slot="home-why-us"
             icon={Users}
-            overlay="card"
             sizes="(min-width: 1280px) 1200px, 92vw"
             className="border-border mt-12 aspect-[16/7] rounded-3xl border"
           />

@@ -13,7 +13,6 @@ export function ServiceCard({ service: s, cta }: { service: Service; cta: string
         <SlotImage
           slot={`${s.slug}-card`}
           icon={s.icon}
-          overlay="card"
           sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 92vw"
           className="aspect-[3/2]"
         />

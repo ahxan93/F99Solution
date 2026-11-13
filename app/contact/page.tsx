@@ -45,7 +45,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Sear
           <SlotImage
             slot="contact-side"
             icon={Headset}
-            overlay="card"
             sizes="(min-width: 1024px) 420px, 100vw"
             className="border-border aspect-[3/2] rounded-3xl border"
           />

@@ -121,7 +121,6 @@ export default function AboutPage() {
           <SlotImage
             slot="about-story"
             icon={Users}
-            overlay="card"
             sizes="(min-width: 1024px) 460px, 100vw"
             className="border-border mt-8 aspect-[3/2] rounded-3xl border"
           />
@@ -260,7 +259,6 @@ export default function AboutPage() {
         <SlotImage
           slot="about-team"
           icon={Users}
-          overlay="card"
           sizes="(min-width: 1280px) 1200px, 92vw"
           className="border-border mt-12 aspect-[16/7] rounded-3xl border"
         />

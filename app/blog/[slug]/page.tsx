@@ -75,7 +75,6 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         <SlotImage
           slot={blogSlot(post.slug)}
           icon={Newspaper}
-          overlay="card"
           preload
           sizes="(min-width: 768px) 768px, 100vw"
           className="border-border mt-8 aspect-[3/2] rounded-3xl border"

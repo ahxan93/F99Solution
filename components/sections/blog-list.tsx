@@ -87,7 +87,6 @@ export function BlogList({
               <SlotFrame
                 asset={photos[p.slug]}
                 icon={Newspaper}
-                overlay="card"
                 sizes="(min-width: 1024px) 380px, (min-width: 768px) 45vw, 92vw"
                 className="aspect-[3/2]"
               />
