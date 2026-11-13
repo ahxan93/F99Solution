@@ -1,26 +1,229 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens. Change the brand accent in ONE place (--accent*).
+   Light values live on :root, dark values on .dark (default theme).
+------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f8fc;
+  --foreground: #0b1020;
+  --surface: #ffffff;
+  --surface-2: #eef1f8;
+  --border: #dfe3ee;
+  --muted: #5b6478;
+  --accent: #2563ff; /* electric blue */
+  --accent-strong: #1747d6;
+  --accent-foreground: #ffffff;
+  --accent-solid: #2563ff; /* button / badge fills (white text >= 4.5:1) */
+  --accent-solid-hover: #1747d6;
+  --accent-glow: rgba(37, 99, 255, 0.28);
+  --success: #12a150;
+  --danger: #e5484d;
+}
+
+.dark {
+  --background: #060a17; /* deep navy/black */
+  --foreground: #eef1fb;
+  --surface: #0d1326;
+  --surface-2: #131a33;
+  --border: #1f2847;
+  --muted: #94a0bd;
+  --accent: #5090ff; /* >= 4.5:1 for small text on navy, incl. over the hero glow */
+  --accent-strong: #7aaeff;
+  --accent-foreground: #ffffff;
+  --accent-solid: #2563ff;
+  --accent-solid-hover: #1747d6;
+  --accent-glow: rgba(59, 130, 255, 0.35);
+  --success: #3ddc84;
+  --danger: #ff6369;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-hover: var(--accent-solid-hover);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-glow: 0 0 40px -8px var(--accent-glow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: auto; /* Lenis handles smooth scrolling */
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+  .text-gradient {
+    background: linear-gradient(120deg, var(--foreground) 10%, var(--accent) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Navbar once the page is scrolled: ~85% navy (dark) / off-white (light) + blur, so content never reads through the menu. */
+  .nav-solid {
+    background: color-mix(in srgb, var(--background) 85%, transparent);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border-bottom-color: var(--border);
+    box-shadow: 0 6px 24px -12px rgb(0 0 0 / 0.35);
+  }
+  .glass {
+    background: color-mix(in srgb, var(--surface) 72%, transparent);
+    backdrop-filter: blur(14px);
+  }
+}
+
+/* Pure-CSS entrance for above-the-fold content (see components/ui/fade-up.tsx).
+   Slide only, no opacity change: text is painted immediately, which keeps LCP fast. */
+@keyframes fade-up {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Lenis recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scroll reveal (see components/ui/reveal.tsx): hidden only when JS runs and motion is allowed. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 28px));
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+  }
+  .reveal[data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Navbar menus: short fade + rise on open. */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.animate-menu-in {
+  animation: menu-in 0.18s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-menu-in {
+    animation: none;
+  }
+}
+
+/* Hero poster on devices that never load the 3D scene: slow, light "breathing" (transform only). */
+@keyframes hero-breathe {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1.05) rotate(0.8deg);
+  }
+}
+.hero-poster-anim {
+  animation: hero-breathe 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-poster-anim {
+    animation: none;
+  }
+}
+
+/* Testimonial carousel: slide the next quote in (replaces a JS animation library). */
+@keyframes testimonial-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+.animate-testimonial {
+  animation: testimonial-in 0.35s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-testimonial {
+    animation: none;
+  }
 }
