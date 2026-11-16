@@ -13,13 +13,16 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { HeroServiceItem } from "@/lib/service-nav";
+import { HeroLite, LITE_TEXTURE } from "./hero-lite";
 
 /**
  * Hero stage = a static WebP poster of the Earth scene (this is the page's LCP image, painted from
  * the server HTML) with the real three.js scene layered on top only when the device can afford it:
  *
  *  - Phones, touch devices, <= 4 cores, <= 4 GB RAM, Save-Data or a 2G connection: NEVER load
- *    three.js. They get the poster with a light CSS "breathing" glow animation.
+ *    three.js. After `load` they get the CSS/SVG "lite" scene (hero-lite.tsx: rotating Earth, rings,
+ *    orbiting cards) that fades in over the poster; until then (and with prefers-reduced-motion,
+ *    or if the texture fails) they keep the poster with a light CSS "breathing" glow.
  *  - Capable desktops: the three.js chunk is requested only after the window `load` event AND the
  *    main thread is idle (or on the first scroll / pointer / key press), then fades in over the poster.
  *  - The scene stops rendering while the hero is off-screen or the tab is hidden.
@@ -32,6 +35,9 @@ import type { HeroServiceItem } from "@/lib/service-nav";
 const IDLE_START_MS = 4000;
 
 const POSTER = "/hero/earth-poster.webp";
+
+/** The CSS-only lite scene starts this long after `load` (poster stays up first, so LCP is unchanged). */
+const LITE_START_MS = 600;
 
 // Lazy-load the heavy three.js bundle on the client only.
 const HeroScene = dynamic(() => import("./hero-scene"), { ssr: false });
@@ -159,13 +165,42 @@ export function HeroCanvas({ heroServices }: { heroServices: HeroServiceItem[] }
 
   const show3d = allow3d && go;
 
+  // Lite scene: only where 3D is not allowed, motion is OK, and Save-Data is off. Mounted after
+  // `load`, and only once its texture has downloaded, so nothing pops in.
+  const [liteReady, setLiteReady] = useState(false);
+  const wantLite = !allow3d && !reducedMotion;
+  useEffect(() => {
+    if (!wantLite) return;
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (conn?.saveData) return;
+    let cancelled = false;
+    let timer = 0;
+    const begin = () => {
+      timer = window.setTimeout(() => {
+        const img = new window.Image();
+        img.onload = () => {
+          if (!cancelled) setLiteReady(true);
+        };
+        img.src = LITE_TEXTURE;
+      }, LITE_START_MS);
+    };
+    if (document.readyState === "complete") begin();
+    else window.addEventListener("load", begin, { once: true });
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+      window.removeEventListener("load", begin);
+    };
+  }, [wantLite]);
+  const showLite = wantLite && liteReady;
+
   return (
     <div ref={wrapRef} className="absolute inset-0">
       {/* Poster: the LCP element. Slow CSS glow/breathing only when 3D is not going to replace it. */}
       <div
         className={cn(
           "pointer-events-none absolute inset-0 transition-opacity duration-700",
-          show3d && sceneReady ? "opacity-0" : "opacity-100",
+          (show3d && sceneReady) || showLite ? "opacity-0" : "opacity-100",
         )}
       >
         <Image
@@ -174,9 +209,14 @@ export function HeroCanvas({ heroServices }: { heroServices: HeroServiceItem[] }
           fill
           preload
           sizes="(min-width: 1280px) 48vw, (min-width: 768px) 92vw, 100vw"
-          className={cn("object-cover", !allow3d && "hero-poster-anim")}
+          className={cn("object-cover", !allow3d && !showLite && "hero-poster-anim")}
         />
       </div>
+      {showLite && (
+        <div className="lite-fade absolute inset-0">
+          <HeroLite heroServices={heroServices} paused={!active} />
+        </div>
+      )}
       {show3d && (
         <SceneBoundary>
           <HeroScene

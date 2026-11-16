@@ -237,3 +237,235 @@ html.lenis body {
     animation: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Hero "lite" scene (components/three/hero-lite.tsx): CSS-only Earth, rings and orbiting cards for
+   phones / low-power devices. Only transform + opacity animate. Design space = 400px box.
+------------------------------------------------------------------- */
+.lite-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  background: #060a17;
+}
+.lite-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.8;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 84% 12%, #cfe0ff, transparent),
+    radial-gradient(1.2px 1.2px at 30% 82%, #fff, transparent),
+    radial-gradient(1px 1px at 92% 70%, #bcd4ff, transparent),
+    radial-gradient(1px 1px at 6% 56%, #cfe0ff, transparent),
+    radial-gradient(1px 1px at 70% 90%, #fff, transparent),
+    radial-gradient(1px 1px at 58% 8%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 46% 40%, #9fc0ff, transparent);
+}
+.lite-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: 400px;
+  margin: -200px 0 0 -200px;
+  scale: 0.85;
+  scale: tan(atan2(100cqmin, 400px));
+}
+.lite-layer,
+.lite-ring,
+.lite-ox {
+  position: absolute;
+  inset: 0;
+}
+.lite-ring {
+  transform: rotate(var(--rot));
+}
+.lite-atmosphere {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 270px;
+  height: 270px;
+  margin: -135px 0 0 -135px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 58%,
+    rgb(77 141 255 / 0.32) 68%,
+    rgb(77 141 255 / 0.08) 82%,
+    transparent 100%
+  );
+}
+.lite-earth {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 200px;
+  margin: -100px 0 0 -100px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0b1d3f;
+  box-shadow: 0 0 34px 2px rgb(77 141 255 / 0.45);
+}
+.lite-earth-strip {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 800px;
+  background-size: 400px 200px;
+  background-repeat: repeat-x;
+  /* One turn = 400px of strip in 40s. Negative delay starts with India facing the viewer. */
+  animation: lite-spin 40s linear infinite;
+  animation-delay: -21.3s;
+}
+.lite-earth-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 26%, rgb(255 255 255 / 0.2), transparent 42%);
+  box-shadow:
+    inset -34px -30px 56px 8px rgb(0 2 14 / 0.92),
+    inset 7px 7px 22px rgb(140 185 255 / 0.28),
+    inset 0 0 0 1px rgb(120 170 255 / 0.25);
+}
+@keyframes lite-spin {
+  from {
+    transform: translate3d(-400px, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Orbit = x and y sine-eased alternating translations, a quarter period apart. */
+.lite-ox {
+  animation: lite-x calc(var(--t) / 2) cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  animation-delay: var(--dx);
+}
+.lite-oy {
+  position: absolute;
+  inset: 0;
+  animation: lite-y calc(var(--t) / 2) cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  animation-delay: var(--dy);
+}
+@keyframes lite-x {
+  from {
+    transform: translate3d(calc(var(--a) * -1), 0, 0);
+  }
+  to {
+    transform: translate3d(var(--a), 0, 0);
+  }
+}
+@keyframes lite-y {
+  from {
+    transform: translate3d(0, calc(var(--b) * -1), 0);
+  }
+  to {
+    transform: translate3d(0, var(--b), 0);
+  }
+}
+/* Front copy is visible while the orbiter is on the near half (y > 0); the back copy otherwise. */
+.lite-depth-front,
+.lite-depth-back {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation-duration: var(--t);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--dy);
+}
+.lite-depth-front {
+  opacity: 0;
+  animation-name: lite-front;
+}
+.lite-depth-back {
+  opacity: 0.4;
+  animation-name: lite-back;
+}
+@keyframes lite-front {
+  0%,
+  22% {
+    opacity: 0;
+  }
+  28%,
+  72% {
+    opacity: 1;
+  }
+  78%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes lite-back {
+  0%,
+  22% {
+    opacity: 0.4;
+  }
+  28%,
+  72% {
+    opacity: 0;
+  }
+  78%,
+  100% {
+    opacity: 0.4;
+  }
+}
+.lite-upright {
+  transform: translate(-50%, -50%) rotate(calc(var(--rot) * -1));
+}
+.lite-card {
+  display: flex;
+  width: 72px;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 4px;
+  border-radius: 14px;
+  border: 1px solid rgb(125 211 252 / 0.3);
+  background: rgb(10 18 48 / 0.82);
+  color: #fff;
+  box-shadow:
+    0 0 22px -8px rgb(80 144 255 / 0.85),
+    inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+.lite-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #cfe3ff;
+  box-shadow:
+    0 0 8px 2px rgb(77 141 255 / 0.9),
+    0 0 16px 4px rgb(77 141 255 / 0.4);
+}
+.lite-dot-orange {
+  background: #ffe2c0;
+  box-shadow:
+    0 0 8px 2px rgb(255 154 61 / 0.9),
+    0 0 16px 4px rgb(255 154 61 / 0.4);
+}
+.lite-root[data-paused] *,
+.lite-root[data-paused] *::before {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lite-root * {
+    animation: none !important;
+  }
+}
+.lite-fade {
+  animation: lite-fade-in 0.7s ease-out both;
+}
+@keyframes lite-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lite-fade {
+    animation: none;
+  }
+}

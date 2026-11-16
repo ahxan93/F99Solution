@@ -5,21 +5,15 @@
  */
 
 // SAMPLE client logos — fictional names, shown as text wordmarks.
-export const trustedBy: string[] = [
-  "Northwind Retail",
-  "BluePeak Realty",
-  "Urban Bloom",
-  "Medico Clinics",
-  "StackLoop",
-  "Spice Route Foods",
-  "Zenith Academy",
-  "Orbit Fitness",
-];
+// Add REAL client names here to show the "Trusted by" strip on the home page. Empty = hidden.
+export const trustedBy: string[] = [];
 
 import { services } from "./services";
 
 // Stats — SAMPLE numbers (except the services count, which is real). Replace with your real aggregate results.
 export interface Stat {
+  /** True for placeholder figures: never shown to visitors. */
+  sample?: boolean;
   value: number;
   suffix: string;
   prefix?: string;
@@ -27,9 +21,9 @@ export interface Stat {
 }
 export const stats: Stat[] = [
   { value: services.length, suffix: "", label: "Specialised services under one roof" },
-  { value: 50, suffix: "+", label: "Campaigns launched (sample)" },
-  { value: 3.5, suffix: "x", label: "Average ROAS target (sample)" },
-  { value: 98, suffix: "%", label: "Client retention goal (sample)" },
+  { value: 50, suffix: "+", label: "Campaigns launched (sample)", sample: true },
+  { value: 3.5, suffix: "x", label: "Average ROAS target (sample)", sample: true },
+  { value: 98, suffix: "%", label: "Client retention goal (sample)", sample: true },
 ];
 
 export const whyUs = [

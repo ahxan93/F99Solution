@@ -4,10 +4,13 @@ import { Reveal } from "@/components/ui/reveal";
 
 /** Figures are SAMPLE placeholders defined in data/home.ts. */
 export function Stats() {
+  // Sample figures are never shown; the strip appears once at least two real stats exist.
+  const real = stats.filter((s) => !s.sample);
+  if (real.length < 2) return null;
   return (
     <section aria-label="Results" className="container-page py-24">
       <div className="from-accent/15 to-surface border-border grid gap-8 rounded-[2rem] border bg-gradient-to-br p-10 sm:grid-cols-2 lg:grid-cols-4 lg:p-14">
-        {stats.map((s, i) => (
+        {real.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.08}>
             <div className="text-center">
               <p className="font-display text-gradient text-5xl font-bold md:text-6xl">

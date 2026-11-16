@@ -76,6 +76,8 @@ const founderStory = [
 const founderQuote =
   "Good marketing should be easy to explain and easy to measure. If we cannot show you what it earns, we should change it.";
 
+const realCertifications = certifications.filter((c) => !/placeholder/i.test(c.name));
+
 export default function AboutPage() {
   const { founder } = siteConfig;
   const facts = [
@@ -305,29 +307,33 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Certifications (placeholder) */}
+      {/* Certifications: placeholder entries are hidden until real ones are added in data/about.ts */}
       <section className="container-page py-24">
-        <SectionHeading
-          eyebrow="Certifications"
-          title="Credentials"
-          description="Placeholder entries: add your real certifications in data/about.ts."
-        />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {certifications.map((c, i) => (
-            <div
-              key={i}
-              className="border-border bg-surface flex items-start gap-4 rounded-2xl border border-dashed p-6"
-            >
-              <Award className="text-accent size-6 shrink-0" aria-hidden="true" />
-              <div>
-                <p className="font-semibold">{c.name}</p>
-                <p className="text-muted text-sm">
-                  {c.issuer} · {c.year}
-                </p>
-              </div>
+        {realCertifications.length > 0 && (
+          <>
+            <SectionHeading
+              eyebrow="Certifications"
+              title="Credentials"
+              description="Qualifications held by our team."
+            />
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {realCertifications.map((c, i) => (
+                <div
+                  key={i}
+                  className="border-border bg-surface flex items-start gap-4 rounded-2xl border border-dashed p-6"
+                >
+                  <Award className="text-accent size-6 shrink-0" aria-hidden="true" />
+                  <div>
+                    <p className="font-semibold">{c.name}</p>
+                    <p className="text-muted text-sm">
+                      {c.issuer} · {c.year}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
         <div className="mt-12 text-center">
           <ButtonLink href="/contact" size="lg">
             Talk to our team about your goals

@@ -40,7 +40,7 @@ export default async function HomePage() {
       <div className="container-page">
         <TrustSignals />
       </div>
-      <CaseStudies items={caseStudies} />
+      <CaseStudies items={caseStudies.filter((c) => !c.slug.startsWith("sample-"))} />
       <Testimonials testimonials={testimonials} />
       <PricingPreview />
       <div className="container-page pt-4 pb-4">

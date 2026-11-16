@@ -8,6 +8,7 @@ import { ButtonLink } from "@/components/ui/button";
 
 /** Shows the first three case studies (DB, or SAMPLE fallback data). */
 export function CaseStudies({ items }: { items: CaseStudy[] }) {
+  if (items.length === 0) return null;
   return (
     <section className="bg-surface border-border border-y py-24">
       <div className="container-page">

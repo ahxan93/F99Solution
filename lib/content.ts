@@ -3,7 +3,6 @@ import { connectDB } from "@/lib/db";
 import { CaseStudyModel } from "@/models/CaseStudy";
 import { Testimonial } from "@/models/Testimonial";
 import { caseStudies as sampleCaseStudies, type CaseStudy } from "@/data/case-studies";
-import { testimonials as sampleTestimonials } from "@/data/home";
 
 export interface TestimonialItem {
   quote: string;
@@ -40,7 +39,8 @@ export async function getTestimonials(): Promise<TestimonialItem[]> {
       }),
     ),
   );
-  return rows.length ? rows : sampleTestimonials.map((t) => ({ ...t }));
+  // No fake reviews on the live site: sample testimonials are never used as a fallback.
+  return rows;
 }
 
 export async function getCaseStudies(): Promise<CaseStudy[]> {

@@ -15,13 +15,14 @@ export function Testimonials({ testimonials }: { testimonials: TestimonialItem[]
   const count = testimonials.length;
 
   useEffect(() => {
-    if (paused || reduce) return;
+    if (paused || reduce || count === 0) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % count), 6000);
     return () => clearInterval(id);
   }, [paused, reduce, count]);
 
   const go = (dir: number) => setIndex((i) => (i + dir + count) % count);
   const t = testimonials[index];
+  if (count === 0) return null;
 
   return (
     <section
