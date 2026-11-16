@@ -45,7 +45,7 @@ export function Footer() {
     .map((s) => ({ label: s.title, href: `/services/${s.slug}` }));
 
   return (
-    <footer className="border-border bg-surface mt-24 border-t pb-20 md:pb-0">
+    <footer className="border-border bg-surface mt-24 border-t pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">
       <div className="container-page grid gap-12 py-16 lg:grid-cols-[1.4fr_2fr]">
         <div className="space-y-5">
           <Logo height={44} />

@@ -13,22 +13,22 @@ export function CookieConsent() {
     <div
       role="region"
       aria-label="Cookie consent"
-      // Pinned just under the navbar (never at the bottom) so it cannot cover the hero buttons,
-      // which always sit lower on the page than the badge / headline. z-40 keeps it BELOW the header
-      // layer (z-50) so the open mobile menu and the services mega-menu always stay tappable.
-      className="border-border bg-surface fixed inset-x-3 top-[4.75rem] z-40 rounded-2xl border p-3 shadow-2xl lg:inset-x-auto lg:top-[5.75rem] lg:right-4 lg:w-[22rem] lg:p-4"
+      // Phones: compact bottom sheet (above the sticky CTA bar, z-[45]) so it never covers the
+      // headline. Desktop: card under the navbar's right edge. Stays below the header (z-50) and the
+      // full-screen mobile menu (z-[100]) so neither is ever blocked.
+      className="border-border bg-surface fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-[45] rounded-2xl border p-3 shadow-2xl lg:inset-x-auto lg:top-[5.75rem] lg:right-4 lg:bottom-auto lg:w-[22rem] lg:p-4"
     >
       <div className="flex gap-3">
         <Cookie className="text-accent mt-0.5 size-5 shrink-0" aria-hidden="true" />
         <div className="text-sm">
-          <p className="font-semibold">Cookies</p>
-          <p className="text-muted mt-0.5 text-xs leading-snug">
+          <p className="hidden font-semibold lg:block">Cookies</p>
+          <p className="text-muted text-xs leading-snug lg:mt-0.5">
             Optional analytics &amp; ad cookies.{" "}
             <Link href="/privacy-policy" className="text-accent underline underline-offset-2">
               Privacy Policy
             </Link>
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-2 flex flex-wrap gap-2 lg:mt-3">
             <Button size="sm" onClick={() => setConsent("granted")}>
               Accept
             </Button>

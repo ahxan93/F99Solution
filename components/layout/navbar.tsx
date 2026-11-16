@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
@@ -21,6 +22,9 @@ export function Navbar({ nav }: { nav: ServiceNav }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const mobileCloseRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -49,11 +53,50 @@ export function Navbar({ nav }: { nav: ServiceNav }) {
     };
   }, []);
 
-  // Lock body scroll while the mobile menu is open.
+  // While the mobile menu is open: lock page scroll, trap focus inside it, close if the viewport
+  // grows to desktop width, and give focus back to the toggle button when it closes.
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    if (!mobileOpen) return;
+    const html = document.documentElement;
+    const prevHtml = html.style.overflow;
+    const prevBody = document.body.style.overflow;
+    html.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    mobileCloseRef.current?.focus();
+
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !mobilePanelRef.current) return;
+      const focusable = Array.from(
+        mobilePanelRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (!mobilePanelRef.current.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onMq = () => mq.matches && setMobileOpen(false);
+    document.addEventListener("keydown", onTab);
+    mq.addEventListener("change", onMq);
+    const toggle = toggleRef.current;
     return () => {
-      document.body.style.overflow = "";
+      html.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
+      document.removeEventListener("keydown", onTab);
+      mq.removeEventListener("change", onMq);
+      toggle?.focus({ preventScroll: true });
     };
   }, [mobileOpen]);
 
@@ -64,10 +107,10 @@ export function Navbar({ nav }: { nav: ServiceNav }) {
   const closeMegaSoon = () => {
     closeTimer.current = setTimeout(() => setMegaOpen(false), 140);
   };
-  const closeAll = () => {
+  const closeAll = useCallback(() => {
     setMegaOpen(false);
     setMobileOpen(false);
-  };
+  }, []);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -192,6 +235,7 @@ export function Navbar({ nav }: { nav: ServiceNav }) {
             </Magnetic>
           </div>
           <button
+            ref={toggleRef}
             type="button"
             className="border-border inline-flex size-10 items-center justify-center rounded-full border lg:hidden"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -204,61 +248,89 @@ export function Navbar({ nav }: { nav: ServiceNav }) {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      <>
-        {mobileOpen && (
+      {/*
+        Mobile menu. Rendered in a portal on <body>, NOT inside <header>: the header uses
+        backdrop-filter, which makes it the containing block for position:fixed children and would
+        clip a fixed panel to the header's height.
+      */}
+      {mobileOpen &&
+        createPortal(
           <div
             id="mobile-menu"
-            className="animate-menu-in bg-background fixed inset-x-0 top-16 bottom-0 overflow-y-auto overscroll-contain px-5 pt-4 pb-10 lg:hidden"
+            ref={mobilePanelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Main menu"
+            className="animate-menu-in bg-background text-foreground fixed inset-0 z-[100] flex h-dvh flex-col lg:hidden"
           >
-            <button
-              type="button"
-              aria-expanded={mobileServicesOpen}
-              onClick={() => setMobileServicesOpen((v) => !v)}
-              className="border-border font-display flex w-full items-center justify-between border-b py-4 text-xl font-semibold"
+            <div className="border-border container-page flex h-16 shrink-0 items-center justify-between border-b">
+              <Logo onClick={closeAll} />
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <button
+                  ref={mobileCloseRef}
+                  type="button"
+                  className="border-border inline-flex size-10 items-center justify-center rounded-full border"
+                  aria-label="Close menu"
+                  onClick={closeAll}
+                >
+                  <X className="size-5" />
+                </button>
+              </div>
+            </div>
+            <div
+              data-lenis-prevent
+              className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pt-2 pb-[calc(2.5rem+env(safe-area-inset-bottom))]"
             >
-              Services
-              <ChevronDown
-                className={cn("size-5 transition-transform", mobileServicesOpen && "rotate-180")}
-              />
-            </button>
-            {mobileServicesOpen && (
-              <ul className="border-border space-y-1 border-b py-3">
-                {services.map((s) => (
-                  <li key={s.slug}>
-                    <Link
-                      href={`/services/${s.slug}`}
-                      onClick={closeAll}
-                      className="hover:bg-surface-2 flex items-center gap-3 rounded-xl p-2.5 text-sm font-medium"
-                    >
-                      <ServiceIcon name={s.icon} className="text-accent size-4" />
-                      {s.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {mainNav.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={closeAll}
-                className="border-border font-display block border-b py-4 text-xl font-semibold"
+              <button
+                type="button"
+                aria-expanded={mobileServicesOpen}
+                onClick={() => setMobileServicesOpen((v) => !v)}
+                className="border-border font-display flex w-full items-center justify-between border-b py-4 text-xl font-semibold"
               >
-                {l.label}
-              </Link>
-            ))}
-            <ButtonLink
-              href="/tools/free-audit"
-              onClick={closeAll}
-              size="lg"
-              className="mt-8 w-full"
-            >
-              Get Free Audit
-            </ButtonLink>
-          </div>
+                Services
+                <ChevronDown
+                  className={cn("size-5 transition-transform", mobileServicesOpen && "rotate-180")}
+                />
+              </button>
+              {mobileServicesOpen && (
+                <ul className="border-border space-y-1 border-b py-3">
+                  {services.map((s) => (
+                    <li key={s.slug}>
+                      <Link
+                        href={`/services/${s.slug}`}
+                        onClick={closeAll}
+                        className="hover:bg-surface-2 flex items-center gap-3 rounded-xl p-2.5 text-sm font-medium"
+                      >
+                        <ServiceIcon name={s.icon} className="text-accent size-4" />
+                        {s.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {mainNav.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={closeAll}
+                  className="border-border font-display block border-b py-4 text-xl font-semibold"
+                >
+                  {l.label}
+                </Link>
+              ))}
+              <ButtonLink
+                href="/tools/free-audit"
+                onClick={closeAll}
+                size="lg"
+                className="mt-8 w-full"
+              >
+                Get Free Audit
+              </ButtonLink>
+            </div>
+          </div>,
+          document.body,
         )}
-      </>
     </header>
   );
 }

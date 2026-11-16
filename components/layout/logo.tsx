@@ -5,14 +5,23 @@ import { siteConfig } from "@/config/site";
 /**
  * Brand logo. Both theme variants are rendered and toggled with CSS (`dark:` variant on the
  * `.dark` class that next-themes sets before first paint), so there is no flash on theme change.
- * Under 380px wide only the square mark is shown. SVGs are served as-is (`unoptimized`).
+ * Under 340px wide only the square mark is shown. SVGs are served as-is (`unoptimized`).
  */
-export function Logo({ className, height = 40 }: { className?: string; height?: number }) {
+export function Logo({
+  className,
+  height = 40,
+  onClick,
+}: {
+  className?: string;
+  height?: number;
+  onClick?: () => void;
+}) {
   const alt = siteConfig.name;
   const width = Math.round((height * 758) / 160);
   return (
     <Link
       href="/"
+      onClick={onClick}
       aria-label={alt}
       className={`inline-flex shrink-0 items-center ${className ?? ""}`}
     >
@@ -22,7 +31,7 @@ export function Logo({ className, height = 40 }: { className?: string; height?: 
         width={height}
         height={height}
         unoptimized
-        className="block min-[380px]:hidden"
+        className="block min-[340px]:hidden"
         style={{ height, width: height }}
       />
       <Image
@@ -31,7 +40,7 @@ export function Logo({ className, height = 40 }: { className?: string; height?: 
         width={width}
         height={height}
         unoptimized
-        className="hidden w-auto min-[380px]:block dark:min-[380px]:hidden"
+        className="hidden w-auto min-[340px]:block dark:min-[340px]:hidden"
         style={{ height }}
       />
       <Image
@@ -41,7 +50,7 @@ export function Logo({ className, height = 40 }: { className?: string; height?: 
         width={width}
         height={height}
         unoptimized
-        className="hidden w-auto dark:min-[380px]:block"
+        className="hidden w-auto dark:min-[340px]:block"
         style={{ height }}
       />
     </Link>

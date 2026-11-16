@@ -23,6 +23,9 @@ export function Reveal({ children, delay = 0, y = 28, className, as = "div" }: R
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // "Armed" = JS is alive and will reveal this element. Un-armed elements are revealed by a CSS
+    // failsafe after a few seconds (globals.css), so a failed hydration never leaves them invisible.
+    el.dataset.armed = "";
     if (!("IntersectionObserver" in window)) {
       el.dataset.shown = "";
       return;

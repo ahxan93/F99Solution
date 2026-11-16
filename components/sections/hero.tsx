@@ -29,7 +29,7 @@ export function Hero() {
             </p>
           </FadeUp>
           <FadeUp delay={0.24}>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div data-hero-cta className="mt-9 flex flex-wrap gap-3">
               <Magnetic>
                 <ButtonLink href="/tools/free-audit" size="lg">
                   Get Free Audit <ArrowRight className="size-4" aria-hidden="true" />
